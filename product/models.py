@@ -1,4 +1,4 @@
-from email.policy import default
+
 from django.utils import timezone
 from tkinter import CASCADE
 from django.db import models
@@ -68,6 +68,7 @@ class Products(models.Model):
 
         else:
             return self.price
+    
     def discount_price(self):
 
         if self.category.offerstatus == True and self.offerstatuspro == True:

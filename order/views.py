@@ -22,12 +22,11 @@ def place_order(request, total=0, quantity=0):
     grand_total = 0
     tax = 0
     reduction = 0
-  
+
     if "reduction" in request.session:
 
+        reduction = request.session["reduction"]
 
-        reduction=request.session['reduction'] 
-       
     else:
         reduction = 0
     discount_list = []
@@ -42,7 +41,7 @@ def place_order(request, total=0, quantity=0):
         total_list.append(total)
         print("total", total)
         quantity = cart_item.quantity
-        total=0
+        total = 0
         sum_total = 0
         try:
             for i in range(0, len(discount_list)):
@@ -54,16 +53,16 @@ def place_order(request, total=0, quantity=0):
 
         print(total)
         tax = (2 * total) / 100
-    
+
         try:
             grand_total = round(total + tax - reduction, 2)
         except:
-             grand_total = round(total + tax, 2)
+            grand_total = round(total + tax, 2)
         print("reduction", reduction)
         total_discount = sum_total + reduction
         print("total discount", total_discount)
         try:
-            del request.session['reduction']
+            del request.session["reduction"]
         except:
             pass
     if request.method == "POST":
@@ -103,8 +102,7 @@ def place_order(request, total=0, quantity=0):
             )  # (we get id because we save the data)
             data.order_number = order_number
             data.save()
-           
-           
+
             # displaying the data into the templates
             order = Order.objects.get(
                 user=current_user, is_ordered=False, order_number=order_number
@@ -322,25 +320,24 @@ def cancel_order(request, id):
     order_products.status = "Canceled"
     order_products.save()
 
-   
-    order_products.product.stock = order_products.quantity+1
+    order_products.product.stock = order_products.quantity + 1
     order_products.product.save()
 
     return redirect("my-orders")
 
 
 # coupon functionalities
-def return_order(request,id):
+def return_order(request, id):
     order_number = id
-    
-    order_products = OrderProduct.objects.get(user=request.user,pk=order_number)
-    print('return order',order_products)
+
+    order_products = OrderProduct.objects.get(user=request.user, pk=order_number)
+    print("return order", order_products)
     order_products.orderproduct_cancel = True
     order_products.return_status = False
     order_products.status = "Canceled"
     order_products.save()
-    
-    order_products.product.stock = order_products.quantity +1
+
+    order_products.product.stock = order_products.quantity + 1
     order_products.product.save()
 
     return redirect("my-orders")

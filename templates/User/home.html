@@ -71,9 +71,14 @@
             <div class="w-100 h-100 pt-3 pb-0" class="card card-product-grid" style="border-radius:5%;background-color:#aaaaaa42;">
              
                 <a href="{{product.get_url}}" class="img-wrap"> <img style="border-radius:10%;height:10rem;width:10rem;" src="{{ product.images.url}}"> </a>
+                <div class="d-flex flex-row align-items-center mb-1">
+                  <!-- <h4 class="mb-1 me-1">{{ product.offer_price }}</h4>
+                  <span class="text-danger"><s>{{ product.product_name}}</s></span> -->
+                </div>
                 <figcaption class="info-wrap">
                     <a href="{{product.get_url}}" style="font-size:1.3rem;"class=" text-centre">{{ product.product_name}}</a>
-                    <div  style="font-size:1rem;" class="price mt-1">{{ product.price}}</div> <!-- price-wrap.// -->
+                    <div  style="font-size:1.5rem;" class="price mt-1">{{ product.offer_price }}</div>
+                    <div  style="font-size:1rem;color:rgb(0, 72, 255);" class="price mt-1"><s>{{ product.price}}</s></div> <!-- price-wrap.// -->
                 </figcaption>
             </div>
         </div> <!-- col.// -->
